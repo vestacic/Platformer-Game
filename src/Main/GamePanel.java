@@ -9,12 +9,29 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class GamePanel extends JPanel {
+    private MouseInput mouseInput;
+    private int xDelta = 100, yDelta = 100;
     public GamePanel(){
-        addKeyListener(new KeyboardInput());
-        addMouseListener(new MouseInput());
+        mouseInput = new MouseInput(this);
+        addKeyListener(new KeyboardInput(this));
+        addMouseListener(mouseInput);
+        addMouseMotionListener(mouseInput);
+    }
+    public void changeXDelta(int value){
+        this.xDelta += value;
+        repaint();
+    }
+    public void changeYDelta(int value){
+        this.yDelta += value;
+        repaint();
+    }
+    public void setRecPos(int x, int y){
+        this.xDelta = x;
+        this.yDelta = y;
+        repaint();
     }
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        g.fillRect(100,100,200,50);
+        g.fillRect(xDelta,yDelta,200,50);
     }
 }
